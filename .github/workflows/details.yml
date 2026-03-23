@@ -17,5 +17,10 @@ jobs:
     steps:
      - name: giving my college deatils
        run: echo "I am from NSIT "
-  
-      
+  docker_info:
+    runs-on: ubuntu-latest
+    steps:
+        - name: providing docker version
+          run: docker --version
+        - name: providing python version
+          run: python --version
