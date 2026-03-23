@@ -9,13 +9,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      name: personal details
-      run: echo "My name is  harsh"
+     - name: giving my personal details
+     - run: echo "My name is  harsh"
 
   college_detail:
     runs-on: ubuntu-latest
     steps:
-      name: college info
-      run: echo "I am from NSIT "
+     - name: giving my college deatils
+     - run: echo "I am from NSIT "
   
       
