@@ -24,6 +24,4 @@ jobs:
               with:
                 context: .
                 tags: ${{ vars.DOCKERHUB_USERNAME }}/flask-app:${{ github.sha }}
-                cache-from: type=gha
-                cache-to: type=gha,mode=max 
-                push: true
+                
