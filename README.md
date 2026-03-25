@@ -338,68 +338,6 @@ Example: Modify SAST severity in `ci.yml`
    - Provide runbooks for issues
    - Include architecture diagrams
 
-## Troubleshooting
-
-### Common Issues
-
-**Issue: "Docker layer caching not working"**
-```bash
-# Solution: Enable BuildKit
-export DOCKER_BUILDKIT=1
-docker build .
-```
-
-**Issue: "Trivy scan fails with rate limits"**
-```bash
-# Solution: Cache Trivy DB
-- name: Run Trivy with Cache
-  run: |
-    trivy image --cache-dir /tmp/trivy-cache myimage:latest
-```
-
-**Issue: "PR comment not appearing"**
-- Verify GITHUB_TOKEN has write permissions
-- Check workflow permissions in repository settings
-- Ensure comment step comes after security scan
-
-**Issue: "Image push authentication fails"**
-- Verify registry credentials in GitHub Secrets
-- Check Docker registry connectivity
-- Confirm credentials haven't expired
-
-### Debug Mode
-
-Enable debug logging:
-```yaml
-env:
-  ACTIONS_STEP_DEBUG: true
-  TRIVY_DEBUG: true
-```
-
-## Contributing
-
-### Development Workflow
-
-1. Create feature branch: `git checkout -b feature/add-new-scan`
-2. Make changes and test locally
-3. Commit with descriptive messages
-4. Push to feature branch
-5. Create Pull Request with details
-6. Address review comments
-7. Merge after approval
-
-### Testing Changes
-
-```bash
-# Validate workflow syntax
-- Install: pip install pre-commit
-- Run: pre-commit run --all-files
-
-# Test locally with act
-- Install: https://github.com/nektos/act
-- Run: act push -l
-```
-
 ## References
 
 - [GitHub Actions Documentation](https://docs.github.com/en/actions)
@@ -415,5 +353,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ---
 
 **Last Updated:** 2026-03-25 22:17:31  
-**Maintainer:** DevSecOps Team  
-**Status:** Active Development
+**Maintainer:** Harsh  
