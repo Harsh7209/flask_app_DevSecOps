@@ -1,9 +1,7 @@
 # name of the workflow
 name: my_details
 on: 
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 jobs:
   personal_detail:
     runs-on: ubuntu-latest

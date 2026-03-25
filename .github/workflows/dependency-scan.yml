@@ -1,0 +1,16 @@
+name: dependency-check
+on:
+  workflow_call:
+
+jobs:
+  package-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checking out code
+        uses: actions/checkout@v4
+
+      - name: scan dependencies
+        uses: pypa/gh-action-pip-audit@v1.1.0
+        with:
+          inputs: requirements.txt

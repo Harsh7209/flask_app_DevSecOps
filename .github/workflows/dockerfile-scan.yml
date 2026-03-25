@@ -1,0 +1,15 @@
+name: dockerfile_scan
+on:
+  workflow_call:
+jobs:
+  dockerfile_check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checking code
+        uses: actions/checkout@v4
+
+      - name: scanning dockerfile
+        uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: ./Dockerfile

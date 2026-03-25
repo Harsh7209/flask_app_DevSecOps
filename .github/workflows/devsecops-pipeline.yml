@@ -1,0 +1,27 @@
+name: devsecops_pipeline
+
+on:
+  workflow_dispatch:
+
+jobs:
+  code-quality:
+    uses: ./.github/workflows/code-quality.yml
+
+  dependency-scan:
+    uses: ./.github/workflows/dependency-scan.yml
+
+  secret-scan:
+    uses: ./.github/workflows/secret-scan.yml
+    secrets: inherit
+
+  DockerFile_scan:
+    uses: ./.github/workflows/dockerfile-scan.yml
+
+  Build_and_push:
+    needs: ["code-quality", "dependency-scan", "secret-scan", "DockerFile_scan"]
+    uses: ./.github/workflows/docker-build-and-push.yml
+    secrets: inherit
+
+  Trivy_scan: 
+    needs: [Build_and_push]
+    uses: ./.github/workflows/dockerhub-image_scan.yml

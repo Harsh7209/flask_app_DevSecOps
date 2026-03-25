@@ -1,0 +1,26 @@
+name: code_quality
+
+on:
+  workflow_call:
+
+jobs:
+  code-check:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.11", "3.12", "3.13", "3.14"]
+    steps:
+      - name: code-checkout
+        uses: actions/checkout@v4
+
+      - name: setting up python
+        uses: actions/setup-python@v5
+        with:
+          python: ${{matrix.python}}
+
+      - name: installing requirements
+        run: pip install -r requirements.txt
+
+      - name: run lint
+        run: flake8 app.py
