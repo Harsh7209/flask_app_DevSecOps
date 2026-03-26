@@ -1,59 +1,46 @@
 name: ec2-deploy
 
-on: 
-    workflow_call:
+on:
+  workflow_call:
 
-jobs: 
-    deploy_on_ec2: 
-        runs-on: ubuntu-latest
-        env:
-            DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
-            DOCKER_TAG: ${{ github.sha }}
-        steps: 
-            - name: Checkout code
-              uses: actions/checkout@v4
+jobs:
+  deploy_on_ec2:
+    runs-on: ubuntu-latest
+    env:
+      DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
+      DOCKER_TAG: ${{ github.sha }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
+      - name: scp to server for copy a file
+        uses: appleboy/scp-action@v1
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-            - name: scp to server for copy a file
-              uses: appleboy/scp-action@v1
-              with:
-                    host: ${{ secrets.EC2_HOST }}
-                    username: ${{ secrets.EC2_USER }}
-                    key: ${{ secrets.SSH_PRIVATE_KEY }}
-                    
-                    source: "docker-download.txt" # Source files in your repo to copy (use "." for all files)
-                    target: "/home/ubuntu/"
-                    
+          source: |
+            docker-download.txt 
+            docker-compose.yml
+          target: /home/ubuntu/
 
+      - name: ssh to  server
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            export DOCKERHUB_USERNAME=${{secrets.DOCKERHUB_USERNAME}} 
+            export TAG=${{secrets.github.sha}}
+            echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login --username ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+            mkdir -p /home/ubuntu/app
+            cp -r  /home/ubuntu/*  /home/ubuntu/app
+            cd /home/ubuntu/app
 
-            - name: copy docker compose file
-              uses: appleboy/scp-action@v1
-              with:
-                    host: ${{ secrets.EC2_HOST }}
-                    username: ${{ secrets.EC2_USER }}
-                    key: ${{ secrets.SSH_PRIVATE_KEY }}
-                    source: "docker-compose.yml"
-                    target: "/home/ubuntu/"
-                            
-                
-
-
-            - name: ssh to  server
-              uses: appleboy/scp-action@v1
-              with:
-                host: ${{ secrets.EC2_HOST }}
-                username: ${{ secrets.EC2_USER }}
-                key: ${{ secrets.SSH_PRIVATE_KEY }}
-                script: |
-                    export DOCKERHUB_USERNAME=${{secrets.DOCKERHUB_USERNAME}} 
-                    export TAG=${{secrets.github.sha}}
-                    echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login --username ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-                    mkdir -p /home/ubuntu/app
-                    cp -r  /home/ubuntu/*  /home/ubuntu/app
-                    cd /home/ubuntu/app
-
-                    chmod +x docker-download.txt
-                    ./docker-download.txt
-                    docker compose pull
-                    docker compose down
-                    docker compose up -d 
+            chmod +x docker-download.txt
+            ./docker-download.txt
+            docker compose pull
+            docker compose down
+            docker compose up -d
