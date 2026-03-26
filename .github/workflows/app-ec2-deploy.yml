@@ -32,7 +32,7 @@ jobs:
 
           script: |
             export DOCKERHUB_USERNAME=${{secrets.DOCKERHUB_USERNAME}} 
-            export TAG=${{secrets.github.sha}}
+            export TAG=${{github.sha}}
             echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login --username ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
             echo  "login success"
             mkdir -p /home/ubuntu/app
@@ -43,5 +43,4 @@ jobs:
             ./docker-download.txt
             docker compose stop
             docker compose rm -f
-            docker compose pull
             docker compose up -d --force-recreate
