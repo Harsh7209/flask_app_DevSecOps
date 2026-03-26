@@ -1,0 +1,56 @@
+name: ec2-deploy
+
+on: 
+    workflow_call:
+
+jobs: 
+    deploy_on_ec2: 
+        runs-on: ubuntu-latest
+        env:
+            DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USER }}
+            DOCKER_TAG: ${{ github.sha }}
+        steps: 
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+
+            - name: scp to server for copy a file
+              uses: appleboy/scp-action@v1.0.3
+              with:
+                    host: ${{ secrets.EC2_HOST }}
+                    username: ${{ secrets.EC2_USER }}
+                    key: ${{ secrets.SSH_PRIVATE_KEY }}
+                    port: ${{ secrets.EC2_PORT }}
+                    source: "docker-download.txt" # Source files in your repo to copy (use "." for all files)
+                    target: "/home/ubuntu/app"
+                    script: |
+                        cd /home/ubuntu/app
+                        chmod +x docker-download.txt
+                        ./docker-download.txt
+
+
+            - name: copy docker compose file
+              uses: appleboy/scp-action@v1.0.3
+              with:
+                    host: ${{ secrets.EC2_HOST }}
+                    username: ${{ secrets.EC2_USER }}
+                    key: ${{ secrets.SSH_PRIVATE_KEY }}
+                    source: "docker-compose.yml"
+                    target: "/home/ubuntu/app"
+                            
+                
+
+
+            - name: ssh to  server
+              uses: appleboy/ssh-action@v1.0.3
+              with:
+                host: ${{ secrets.SSH_HOST }}
+                username: ${{ secrets.SSH_USER }}
+                key: ${{ secrets.SSH_PRIVATE_KEY }}
+                script: |
+                    export DOCKERHUB_USERNAME=${{secrets.DOCKERHUB_USERNAME}} 
+                    export TAG=${{secrets.DOCKERHUB_PASSWORD}}
+                    echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login --username ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+                    docker compose pull
+                    docker compose down
+                    docker compose up -d --build
