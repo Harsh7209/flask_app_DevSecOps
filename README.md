@@ -109,10 +109,3 @@ docker run -p 5000:5000 flask-devsecops
 
 Harsh Choubey  
 https://github.com/Harsh7209
-"""
-
-file_path = "/mnt/data/README.md"
-with open(file_path, "w") as f:
-    f.write(content)
-
-file_path
