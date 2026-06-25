@@ -1,29 +1,108 @@
-HARSH CHOUBEY
-harshchoubey113@gmail.com • linkedin.com/in/harshchoubey113 • github.com/Harsh7209
 
-Dear Hiring Manager,
+## 📌 Project Overview
 
-I'm excited to apply for the DevOps Internship position. As someone graduating this June with a passion for infrastructure and systems, I'm at the perfect point in my journey to grow alongside a talented team.
+This project is a **Flask-based web application** that I have **adopted from an open-source repository** and enhanced by implementing **DevSecOps practices** across the development lifecycle.
 
-Here's what sets me apart: I haven't waited for a job to start learning DevOps. Over the past year, I've deliberately built production-grade projects to understand how modern infrastructure works. My flagship project is a multi-tier application deployed on AWS EKS—a project that forced me to learn the full DevOps lifecycle from scratch.
+The primary goal of this project is to demonstrate how security can be integrated into every phase of the DevOps pipeline — from development to deployment.
 
-Through this project, I built real-world systems that taught me:
-- Infrastructure as Code with Terraform (VPCs, EKS clusters, managed storage, IRSA)
-- CI/CD pipeline development with GitHub Actions (7-stage pipeline with security scanning: GitLeaks, OWASP, Trivy, Kubernetes validation)
-- GitOps workflows using ArgoCD for automated, version-controlled infrastructure
-- Container orchestration with Kubernetes (StatefulSets, ConfigMaps, Secrets, probes, init containers)
-- Observability with Prometheus and Grafana in a production environment
-- Containerization with Docker and package management with Helm
+---
 
-But what I value most isn't just the tools I've learned—it's the problem-solving mindset. I've intentionally broken systems to understand why they fail. I've debugged CrashLoopBackOffing pods, resolved ArgoCD sync issues, and figured out networking problems at 2 AM because I was genuinely curious about the "why."
+## ⚠️ Disclaimer
 
-As an intern, I'm looking for an opportunity to bring this hands-on learning approach to your team. I want to work alongside experienced engineers who can teach me the nuances of production DevOps—the decisions that matter, the tradeoffs that shape real systems, and the practices that separate good infrastructure from great infrastructure.
+> 🔹 This project was originally sourced from an open-source repository.  
+> 🔹 I have adopted and extended it by implementing DevSecOps principles, tools, and automation.
 
-What I bring as an intern isn't years of experience—it's something potentially more valuable: genuine curiosity, a learning mindset that won't quit, and a proven ability to take on challenges outside my comfort zone and push through until I understand them completely. I document what I learn. I ask thoughtful questions. I'm coachable and eager to contribute meaningfully from day one.
+---
 
-I'm not just looking for a resume line—I'm looking for a place to grow, to learn from the best, and to start building a foundation for a long career in DevOps. If that resonates with your team, I'd love to discuss how I can add value during my internship.
+## 🧠 What is DevSecOps?
 
-Thank you for considering my application. I look forward to talking with you.
+DevSecOps is the practice of integrating **security into every stage of the software development lifecycle**, instead of treating it as a separate phase.
 
-Best regards,
-Harsh Choubey
+---
+
+## 🛠️ Tech Stack
+
+- **Backend:** Flask (Python)
+- **Version Control:** Git & GitHub
+- **CI/CD:** GitHub Actions
+- **Containerization:** Docker
+- **Security Tools:** (Add tools like Trivy, Bandit, etc.)
+- **Infrastructure:** (Optional – Kubernetes / AWS)
+
+---
+
+## 🔐 DevSecOps Implementation
+
+### 1️⃣ Secure Code Practices
+- Improved code quality
+- Removed hardcoded secrets
+- Followed secure coding practices
+
+### 2️⃣ CI/CD Pipeline
+- Automated workflows using GitHub Actions
+- Trigger on every push
+- Integrated security checks
+
+### 3️⃣ Security Scanning
+- SAST (Static Code Analysis)
+- Dependency Scanning
+- Container Image Scanning
+
+### 4️⃣ Docker Security
+- Optimized Dockerfile
+- Reduced vulnerabilities
+- Followed best practices
+
+---
+
+## ⚙️ CI/CD Workflow
+
+Code Commit → GitHub → GitHub Actions → Build → Scan → Docker Build → Deploy
+
+---
+
+## 📂 Project Structure
+
+.
+├── app.py
+├── requirements.txt
+├── Dockerfile
+├── .github/workflows/
+└── templates/
+
+---
+
+## 🚀 Getting Started
+
+### Clone Repo
+
+git clone https://github.com/Harsh7209/flask_app_DevSecOps.git  
+cd flask_app_DevSecOps
+
+### Run Locally
+
+pip install -r requirements.txt  
+python app.py
+
+---
+
+## 🐳 Run with Docker
+
+docker build -t flask-devsecops .  
+docker run -p 5000:5000 flask-devsecops  
+
+---
+
+## 🎯 Key Highlights
+
+✔️ Open-source project adoption  
+✔️ DevSecOps implementation  
+✔️ Security integrated CI/CD  
+✔️ Dockerized application  
+
+---
+
+## 👤 Author
+
+Harsh Choubey  
+https://github.com/Harsh7209
